@@ -46,7 +46,7 @@ class BookingErrorScreen extends StatelessWidget {
               onPressed: () {
                 Navigator.pop(context);
               },
-              child: Text('Change time'),
+              child: Text('Changes time'),
             ),
           ],
         ),
