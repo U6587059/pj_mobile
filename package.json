@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "react-native-datepicker-dialog": "^0.0.9"
+  }
+}
