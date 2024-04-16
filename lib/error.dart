@@ -31,7 +31,7 @@ class BookingErrorScreen extends StatelessWidget {
             ),
             SizedBox(height: 20),
             Text(
-              'ขออภัย เกิดข้อผิดพลาด ไม่สามารถทำการจองได้',
+              'ขออภัย เกิดข้อผิดพลาด ไม่สามารถทำการจองได้.',
               style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
               textAlign: TextAlign.center,
             ),
@@ -46,7 +46,7 @@ class BookingErrorScreen extends StatelessWidget {
               onPressed: () {
                 Navigator.pop(context);
               },
-              child: Text('Change time'),
+              child: Text('Changess time'),
             ),
           ],
         ),
