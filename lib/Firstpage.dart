@@ -35,7 +35,7 @@ class _LoginScreenState extends State<LoginScreen> {
     return Scaffold(
       body: Stack(
         children: [
-          // เพิ่ม Image widget สำหรับรูปภาพเพื่อน
+          // Background image
           Positioned.fill(
             child: Image.asset('images/kave_main.png', fit: BoxFit.cover),
           ),
@@ -44,11 +44,17 @@ class _LoginScreenState extends State<LoginScreen> {
             child: Form(
               key: _formKey,
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment:
+                    MainAxisAlignment.start, // Adjust the alignment
                 children: [
-                  const Center(
+                  SizedBox(height: 100), // Add spacing above the logo
+                  Center(
                     child: Column(
                       children: [
+                        Image.asset('images/keke_logo.png',
+                            width: 200, height: 200),
+                        const SizedBox(
+                            height: 40), // Add spacing below the logo
                         Text(
                           'Login',
                           style: TextStyle(
@@ -57,7 +63,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             color: Colors.black,
                           ),
                         ),
-                        SizedBox(height: 8.0),
+                        const SizedBox(height: 16.0),
                         Text(
                           'Welcome back, log in with your account.',
                           style: TextStyle(
@@ -69,53 +75,57 @@ class _LoginScreenState extends State<LoginScreen> {
                       ],
                     ),
                   ),
-                  const SizedBox(height: 32.0),
-                  TextFormField(
-                    controller: _emailController,
-                    decoration: InputDecoration(
-                      prefixIcon: const Icon(Icons.email, color: Colors.white),
-                      fillColor: Colors.black,
-                      filled: true,
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(25.0),
-                        borderSide: const BorderSide(color: Colors.white),
+                  SizedBox(
+                      height: 40), // Add spacing below the logo and message
+                  Column(
+                    children: [
+                      TextFormField(
+                        controller: _emailController,
+                        decoration: InputDecoration(
+                          prefixIcon:
+                              const Icon(Icons.email, color: Colors.white),
+                          fillColor: Colors.black,
+                          filled: true,
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(25.0),
+                            borderSide: const BorderSide(color: Colors.white),
+                          ),
+                          labelText: 'enter your Email ',
+                          labelStyle: const TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
+                          contentPadding: const EdgeInsets.symmetric(
+                              vertical: 15.0, horizontal: 20.0),
+                        ),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'กรุณาใส่อีเมล';
+                          }
+                          return null;
+                        },
+                        style: const TextStyle(color: Colors.white),
                       ),
-                      labelText: 'enter your Email ',
-                      labelStyle: const TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
+                      SizedBox(height: 32.0),
+                      ElevatedButton(
+                        onPressed: () {
+                          if (_formKey.currentState!.validate()) {
+                            print('Email: ${_emailController.text}');
+                            // Handle the login logic
+                          }
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.black,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(25.0),
+                          ),
+                        ),
+                        child: const Text(
+                          'ค้นหาบัญชี',
+                          style: TextStyle(color: Colors.white),
+                        ),
                       ),
-                    ),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'กรุณาใส่อีเมล';
-                      }
-                      return null;
-                    },
-                    style: const TextStyle(color: Colors.white),
-                  ),
-                  const SizedBox(height: 32.0),
-                  ElevatedButton(
-                    onPressed: () {
-                      if (_formKey.currentState!.validate()) {
-                        // ทำการค้นหาบัญชีโดยใช้ Email ที่นี่
-                        // ตัวอย่างนี้เป็นเพียงการพิมพ์อีเมล
-                        print('Email: ${_emailController.text}');
-
-                        // นำข้อมูลไปใช้งานต่อ เช่น
-                        // - ไปยังหน้าจอถัดไป
-                        // - เรียกใช้ API ค้นหาบัญชี
-                        // - ฯลฯ
-                      }
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.black,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(25.0),
-                      ),
-                    ),
-                    child: const Text('ค้นหาบัญชี',
-                        style: TextStyle(color: Colors.white)),
+                    ],
                   ),
                 ],
               ),

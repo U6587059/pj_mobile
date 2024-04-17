@@ -25,7 +25,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   final _formKey = GlobalKey<FormState>();
   final _passwordController = TextEditingController();
-  final _roomNumberController = TextEditingController();
+  final _roomNumberController = TextEditingController(text: 'C 427');
 
   @override
   void dispose() {
@@ -41,84 +41,83 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text('WELCOME BACK'),
         centerTitle: true,
       ),
-      body: Form(
-        key: _formKey,
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            children: [
-              // Image display
-              Image.asset('images/profile.png'),
+      body: SingleChildScrollView( // ห่อ Form ด้วย SingleChildScrollView
+        child: Form(
+          key: _formKey,
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                // Image display
+                Image.asset('images/profile.png'),
 
-              // Room Number label
-              Text(
-                'ROOM NUMBER',
-                style: TextStyle(fontSize: 16.0),
-              ),
+                SizedBox(height: 8.0),
 
-              // Spacing between label and text field
-              SizedBox(height: 8.0), // Add a vertical gap
-
-              // Room Number text field
-              Container(
-                decoration: ShapeDecoration(
-                  color: Colors.black,
-                  shape: StadiumBorder(),
-                ),
-                child: TextFormField(
+                // Room Number text field
+                TextField(
                   controller: _roomNumberController,
+                  readOnly: true,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: 18.0),
                   decoration: InputDecoration(
-                    hintText: 'Enter Room Number',
-                    border: InputBorder.none,
-                    contentPadding: EdgeInsets.all(16.0),
+                    labelText: 'ROOM',
+                    contentPadding: EdgeInsets.symmetric(vertical: 15.0),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(25.0),
+                      borderSide: BorderSide(color: Colors.black, width: 1.0),
+                    ),
                   ),
-                  style: TextStyle(color: Colors.white),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter a password';
-                    }
-                    return null;
-                  },
                 ),
-              ),
 
-              // Password input field
-              SizedBox(height: 24.0),
-              Container(
-                decoration: ShapeDecoration(
-                  color: Colors.black,
-                  shape: StadiumBorder(),
-                ),
-                child: TextFormField(
+                SizedBox(height: 16.0),
+
+                // Password text field
+                TextFormField(
                   controller: _passwordController,
+                  obscureText: true,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: 18.0),
                   decoration: InputDecoration(
-                    labelText: 'Enter Password',
-                    border: InputBorder.none,
-                    contentPadding: EdgeInsets.all(16.0),
+                    labelText: 'PASSWORD',
+                    contentPadding: EdgeInsets.symmetric(vertical: 15.0),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(25.0),
+                      borderSide: BorderSide(color: Colors.black, width: 1.0),
+                    ),
                   ),
-                  style: TextStyle(color: Colors.white),
                   validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter a password';
+                    if (value!.isEmpty) {
+                      return 'Please enter your password';
                     }
                     return null;
                   },
                 ),
-              ),
 
-              // Submit button
-              SizedBox(height: 24.0),
-              ElevatedButton(
-                onPressed: () {
-                  if (_formKey.currentState!.validate()) {
-                    // Handle password submission and potentially room number
-                    print('Password: ${_passwordController.text}');
-                    print('Room Number: ${_roomNumberController.text}');
-                  }
-                },
-                child: Text('Submit'),
-              ),
-            ],
+                SizedBox(height: 16.0),
+
+                // Login button
+                TextButton(
+                  onPressed: () {
+                    if (_formKey.currentState!.validate()) {
+                      // Process login
+                      print('Room Number: ${_roomNumberController.text}');
+                      print('Password: ${_passwordController.text}');
+                    }
+                  },
+                  child: Text('LOGIN', style: TextStyle(fontSize: 16.0)),
+                  style: TextButton.styleFrom(
+                    foregroundColor: Colors.white,
+                    backgroundColor: Colors.blue,
+                    padding: EdgeInsets.symmetric(horizontal: 50.0, vertical: 15.0),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(25.0),
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
