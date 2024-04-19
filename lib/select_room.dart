@@ -3,6 +3,7 @@ import 'kitchenpage.dart'; // Import the new pages
 import 'cinema.dart';
 import 'game.dart';
 import 'meetingpage.dart';
+
 void main() {
   runApp(const MyApp());
 }
@@ -35,8 +36,10 @@ class _MyHomePageState extends State<select_MyHomePage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.black,
+        centerTitle: true,
         title: Container(
           padding: const EdgeInsets.symmetric(horizontal: 16.0),
+          child: Center(
           child: const Center(
             child: Text(
               'ROOMS',
@@ -49,11 +52,12 @@ class _MyHomePageState extends State<select_MyHomePage> {
           ),
         ),
       ),
+      ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-             InkWell(
+            InkWell(
               onTap: () {
                 Navigator.push(
                   context,

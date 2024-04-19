@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'select_room.dart';
+import 'package:flutter/widgets.dart';
+import 'select_room.dart'; // Ensure this import path is correct and 'select_room.dart' exists
 
 void main() {
   runApp(MyApp());
@@ -26,12 +27,12 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   final _formKey = GlobalKey<FormState>();
   final _passwordController = TextEditingController();
-  final _roomNumberController = TextEditingController(text: 'C 427');
+  final _emailController = TextEditingController();
 
   @override
   void dispose() {
     _passwordController.dispose();
-    _roomNumberController.dispose();
+    _emailController.dispose();
     super.dispose();
   }
 
@@ -43,7 +44,6 @@ class _MyHomePageState extends State<MyHomePage> {
         centerTitle: true,
       ),
       body: SingleChildScrollView(
-        // ห่อ Form ด้วย SingleChildScrollView
         child: Form(
           key: _formKey,
           child: Padding(
@@ -52,30 +52,49 @@ class _MyHomePageState extends State<MyHomePage> {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                // Image display
-                Image.asset('images/profile.png'),
-
+                Image.asset('images/keke_logo.png', width: 150, height: 150),
                 SizedBox(height: 8.0),
-
-                // Room Number text field
-                TextField(
-                  controller: _roomNumberController,
-                  readOnly: true,
+                Text(
+                  'WELCOME BACK',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 24.0,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Text(
+                  'PLEASE LOGIN TO CONTINUE',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 16.0,
+                    color: Colors.grey,
+                  ),
+                ),
+                SizedBox(height: 16.0),
+                TextFormField(
+                  controller: _emailController,
+                  keyboardType: TextInputType.emailAddress,
                   textAlign: TextAlign.center,
                   style: TextStyle(fontSize: 18.0),
                   decoration: InputDecoration(
-                    labelText: 'ROOM',
+                    labelText: 'EMAIL',
                     contentPadding: EdgeInsets.symmetric(vertical: 15.0),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(25.0),
                       borderSide: BorderSide(color: Colors.black, width: 1.0),
                     ),
                   ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter your email';
+                    }
+                    if (!value.contains('@')) {
+                      return 'Please enter a valid email';
+                    }
+                    return null;
+                  },
                 ),
-
                 SizedBox(height: 16.0),
-
-                // Password text field
                 TextFormField(
                   controller: _passwordController,
                   obscureText: true,
@@ -90,38 +109,36 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
                   ),
                   validator: (value) {
-                    if (value!.isEmpty) {
+                    if (value == null || value.isEmpty) {
                       return 'Please enter your password';
                     }
                     return null;
                   },
                 ),
-
                 SizedBox(height: 16.0),
-
-                // Login button
-                TextButton(
-                  onPressed: () {
-                    if (_formKey.currentState!.validate()) {
-                      // Process login
-                      print('Room Number: ${_roomNumberController.text}');
-                      print('Password: ${_passwordController.text}');
-                    }
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) =>
-                           select_MyHomePage()), // Corrected: Should be LoginScreen()
-                    );
-                  },
-                  child: Text('LOGIN', style: TextStyle(fontSize: 16.0)),
-                  style: TextButton.styleFrom(
-                    foregroundColor: Colors.white,
-                    backgroundColor: Colors.blue,
-                    padding:
-                        EdgeInsets.symmetric(horizontal: 50.0, vertical: 15.0),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(25.0),
+                GestureDetector(
+                  child: TextButton(
+                    onPressed: () {
+                      if (_formKey.currentState!.validate()) {
+                        print('Email: ${_emailController.text}');
+                        print('Password: ${_passwordController.text}');
+                      }
+                      // Navigator.push(
+                      //   context,
+                      //   MaterialPageRoute(
+                      //       builder: (context) =>
+                      //           select_MyHomePage()), // Corrected the class name
+                      // );
+                    },
+                    child: Text('LOGIN', style: TextStyle(fontSize: 16.0)),
+                    style: TextButton.styleFrom(
+                      foregroundColor: Colors.white,
+                      backgroundColor: Colors.blue,
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 50.0, vertical: 15.0),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(25.0),
+                      ),
                     ),
                   ),
                 ),
