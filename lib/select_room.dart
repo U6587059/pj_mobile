@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
-
+import 'kitchenpage.dart'; // Import the new pages
+import 'cinema.dart';
+import 'game.dart';
+import 'meetingpage.dart';
 void main() {
   runApp(const MyApp());
 }
@@ -14,19 +17,19 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(),
+      home: const select_MyHomePage(),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key}) : super(key: key);
+class select_MyHomePage extends StatefulWidget {
+  const select_MyHomePage({Key? key}) : super(key: key);
 
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _MyHomePageState extends State<select_MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -50,9 +53,12 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            InkWell(
+             InkWell(
               onTap: () {
-                // TODO: Navigate to Kitchen page
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => kitchen()),
+                );
               },
               child: Stack(
                 alignment: Alignment.bottomLeft,
@@ -88,7 +94,10 @@ class _MyHomePageState extends State<MyHomePage> {
             const SizedBox(height: 20),
             InkWell(
               onTap: () {
-                // TODO: Navigate to Cinema page
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => movie()),
+                );
               },
               child: Stack(
                 alignment: Alignment.bottomLeft,
@@ -123,7 +132,10 @@ class _MyHomePageState extends State<MyHomePage> {
             const SizedBox(height: 20),
             InkWell(
               onTap: () {
-                // TODO: Navigate to Game page
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => game()),
+                );
               },
               child: Stack(
                 alignment: Alignment.bottomLeft,
@@ -158,7 +170,10 @@ class _MyHomePageState extends State<MyHomePage> {
             const SizedBox(height: 20),
             InkWell(
               onTap: () {
-                // TODO: Navigate to Meeting room page
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => meeting()),
+                );
               },
               child: Stack(
                 alignment: Alignment.bottomLeft,

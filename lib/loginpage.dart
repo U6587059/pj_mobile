@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'select_room.dart';
 
 void main() {
   runApp(MyApp());
@@ -41,7 +42,8 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text('WELCOME BACK'),
         centerTitle: true,
       ),
-      body: SingleChildScrollView( // ห่อ Form ด้วย SingleChildScrollView
+      body: SingleChildScrollView(
+        // ห่อ Form ด้วย SingleChildScrollView
         child: Form(
           key: _formKey,
           child: Padding(
@@ -105,12 +107,19 @@ class _MyHomePageState extends State<MyHomePage> {
                       print('Room Number: ${_roomNumberController.text}');
                       print('Password: ${_passwordController.text}');
                     }
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                           select_MyHomePage()), // Corrected: Should be LoginScreen()
+                    );
                   },
                   child: Text('LOGIN', style: TextStyle(fontSize: 16.0)),
                   style: TextButton.styleFrom(
                     foregroundColor: Colors.white,
                     backgroundColor: Colors.blue,
-                    padding: EdgeInsets.symmetric(horizontal: 50.0, vertical: 15.0),
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 50.0, vertical: 15.0),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(25.0),
                     ),

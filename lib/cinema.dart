@@ -8,17 +8,17 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: BookingPage(),
+      home: movie(),
     );
   }
 }
 
-class BookingPage extends StatefulWidget {
+class movie extends StatefulWidget {
   @override
-  _BookingPageState createState() => _BookingPageState();
+  _movieState createState() => _movieState();
 }
 
-class _BookingPageState extends State<BookingPage> {
+class _movieState extends State<movie> {
   String _roomName = '';
   String _startTime = '09:00';
   String _endTime = '09:30';

@@ -117,7 +117,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               context,
                               MaterialPageRoute(
                                   builder: (context) =>
-                                      LoginScreen()), // Corrected: Should be LoginScreen()
+                                      MyHomePage()), // Corrected: Should be LoginScreen()
                             );
                           }
                         },
