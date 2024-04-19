@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'loginpage.dart';
 
 void main() {
   runApp(MyApp());
@@ -111,7 +112,13 @@ class _LoginScreenState extends State<LoginScreen> {
                         onPressed: () {
                           if (_formKey.currentState!.validate()) {
                             print('Email: ${_emailController.text}');
-                            // Handle the login logic
+                            // Navigate to LoginScreen
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      LoginScreen()), // Corrected: Should be LoginScreen()
+                            );
                           }
                         },
                         style: ElevatedButton.styleFrom(
