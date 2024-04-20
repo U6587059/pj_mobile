@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'cinema.dart';
 import 'error.dart';
 import 'package:pj_mobile/Firstpage.dart';
@@ -8,20 +9,22 @@ import 'package:pj_mobile/main_page.dart';
 import 'package:pj_mobile/meetingpage.dart';
 import 'package:pj_mobile/succuess.dart';
 import 'package:pj_mobile/select_room.dart';
-void main() {
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized(); // ผูก Flutter กับ engine
+  await Firebase.initializeApp(); // เริ่มต้น Firebase
   runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       routes: <String, WidgetBuilder>{
-        "/": (BuildContext context) => LoginScreen(),
+        "/": (BuildContext context) => LoginScreen(), // สมมุติว่า LoginScreen คือหน้าล็อกอินของคุณ
       },
       initialRoute: "/",
     );

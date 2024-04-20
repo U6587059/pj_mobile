@@ -1,23 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'select_room.dart'; // Ensure this import path is correct and 'select_room.dart' exists
-
-void main() {
-  runApp(MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'WELCOME BACK test',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: MyHomePage(),
-    );
-  }
-}
+import 'select_room.dart'; // Ensure this path is correct and 'select_room.dart' exists
 
 class MyHomePage extends StatefulWidget {
   @override
@@ -28,12 +12,42 @@ class _MyHomePageState extends State<MyHomePage> {
   final _formKey = GlobalKey<FormState>();
   final _passwordController = TextEditingController();
   final _emailController = TextEditingController();
+  final FirebaseAuth _auth = FirebaseAuth.instance; // Firebase Auth instance
 
   @override
   void dispose() {
     _passwordController.dispose();
     _emailController.dispose();
     super.dispose();
+  }
+
+  void _login() async {
+    if (_formKey.currentState!.validate()) {
+      try {
+        // Attempt to sign in the user with Firebase Auth
+        UserCredential userCredential = await _auth.signInWithEmailAndPassword(
+          email: _emailController.text, // Removed trim() to preserve case sensitivity
+          password: _passwordController.text.trim(),
+        );
+        // Navigate to another page if login is successful
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => select_MyHomePage()), // Make sure the class name matches
+        );
+      } on FirebaseAuthException catch (e) {
+        // Handle errors
+        String errorMessage = 'Email or Password is wrong'; // Generic error message
+        if (e.code == 'user-not-found' || e.code == 'wrong-password') {
+          errorMessage = 'Email or Password is wrong';
+        }
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(errorMessage),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+    }
   }
 
   @override
@@ -116,29 +130,15 @@ class _MyHomePageState extends State<MyHomePage> {
                   },
                 ),
                 SizedBox(height: 16.0),
-                GestureDetector(
-                  child: TextButton(
-                    onPressed: () {
-                      if (_formKey.currentState!.validate()) {
-                        print('Email: ${_emailController.text}');
-                        print('Password: ${_passwordController.text}');
-                      }
-                      // Navigator.push(
-                      //   context,
-                      //   MaterialPageRoute(
-                      //       builder: (context) =>
-                      //           select_MyHomePage()), // Corrected the class name
-                      // );
-                    },
-                    child: Text('LOGIN', style: TextStyle(fontSize: 16.0)),
-                    style: TextButton.styleFrom(
-                      foregroundColor: Colors.white,
-                      backgroundColor: Colors.blue,
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 50.0, vertical: 15.0),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(25.0),
-                      ),
+                TextButton(
+                  onPressed: _login,
+                  child: Text('LOGIN', style: TextStyle(fontSize: 16.0)),
+                  style: TextButton.styleFrom(
+                    foregroundColor: Colors.white,
+                    backgroundColor: Colors.blue,
+                    padding: EdgeInsets.symmetric(horizontal: 50.0, vertical: 15.0),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(25.0),
                     ),
                   ),
                 ),
