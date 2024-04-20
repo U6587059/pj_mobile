@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 void main() {
   runApp(MyApp());
@@ -8,26 +9,23 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: meeting(),
+      home: Meeting(),
     );
   }
 }
 
-class meeting extends StatefulWidget {
+class Meeting extends StatefulWidget {
   @override
-  _meetingPageState createState() => _meetingPageState();
+  _MeetingPageState createState() => _MeetingPageState();
 }
 
-class _meetingPageState extends State<meeting> {
-  String _roomName = '';
+class _MeetingPageState extends State<Meeting> {
+  String _roomName = 'MEETING ROOM';
   String _startTime = '09:00';
   String _endTime = '09:30';
   DateTime _selectedDate = DateTime.now();
-  TextEditingController _roomController = TextEditingController(
-      text:
-          'MEETING ROOM'); // ตั้งค่าเริ่มต้นให้ช่อง 'ROOM' เป็น 'MEETING ROOM'
+  TextEditingController _roomController = TextEditingController(text: 'MEETING ROOM');
 
-  // Generate time slots from 09:00 to 22:00 with 30 minutes interval
   List<String> _generateTimeSlots() {
     List<String> timeSlots = [];
     for (int hour = 9; hour <= 22; hour++) {
@@ -40,7 +38,6 @@ class _meetingPageState extends State<meeting> {
     return timeSlots;
   }
 
-  // Generate time slots for a maximum duration of 4 hours from the specified start time
   List<String> _generateEndTimeSlots(String startTime) {
     List<String> endTimeSlots = [];
     int startHour = int.parse(startTime.substring(0, 2));
@@ -50,9 +47,7 @@ class _meetingPageState extends State<meeting> {
       maxHour = 22;
     }
     for (int hour = startHour; hour <= maxHour; hour++) {
-      for (int minute = (hour == startHour ? startMinute + 30 : 0);
-          minute < 60;
-          minute += 30) {
+      for (int minute = (hour == startHour ? startMinute + 30 : 0); minute < 60; minute += 30) {
         String hourStr = hour.toString().padLeft(2, '0');
         String minuteStr = minute.toString().padLeft(2, '0');
         endTimeSlots.add('$hourStr:$minuteStr');
@@ -61,30 +56,35 @@ class _meetingPageState extends State<meeting> {
     return endTimeSlots;
   }
 
-  // Calculate the end time based on the start time
-  String _calculateEndTime(String startTime) {
-    int startHour = int.parse(startTime.substring(0, 2));
-    int startMinute = int.parse(startTime.substring(3, 5));
-    int endHour = startHour + 4;
-    if (endHour > 22) {
-      endHour = 22;
-    }
-    int endMinute = startMinute;
-    return '$endHour:${endMinute.toString().padLeft(2, '0')}';
-  }
-
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
       context: context,
       initialDate: _selectedDate,
       firstDate: DateTime.now(),
-      lastDate: DateTime.now()
-          .add(Duration(days: 2)), // จำกัดให้เลือกได้ล่วงหน้า 2 วัน
+      lastDate: DateTime.now().add(Duration(days: 2)),
     );
     if (picked != null && picked != _selectedDate)
       setState(() {
         _selectedDate = picked;
       });
+  }
+
+  void checkAndBookRoom() async {
+    final FirebaseFirestore firestore = FirebaseFirestore.instance;
+
+    QuerySnapshot query = await firestore.collection('bookings').where('room', isEqualTo: _roomName).where('date', isEqualTo: _selectedDate.toLocal().toString().split(' ')[0]).where('startTime', isEqualTo: _startTime).where('endTime', isEqualTo: _endTime).get();
+
+    if (query.docs.isNotEmpty) {
+      Navigator.pushNamed(context, '/error');
+    } else {
+      await firestore.collection('bookings').add({
+        'room': _roomName,
+        'date': _selectedDate.toLocal().toString().split(' ')[0],
+        'startTime': _startTime,
+        'endTime': _endTime,
+      });
+      Navigator.pushNamed(context, '/success');
+    }
   }
 
   @override
@@ -106,24 +106,17 @@ class _meetingPageState extends State<meeting> {
           padding: const EdgeInsets.all(16.0),
           child: Column(
             children: [
-              //  Add the image widget here
               Image.asset('images/meeting.jpg'),
               SizedBox(height: 16.0),
               TextField(
-                controller: _roomController, // ใช้ controller ที่กำหนดไว้
-                readOnly: true, // ตั้งให้ไม่สามารถแก้ไขได้
+                controller: _roomController,
+                readOnly: true,
                 decoration: InputDecoration(
                   labelText: 'ROOM',
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(25.0),
-                    borderSide: BorderSide(color: Colors.black, width: 1.0),
                   ),
                 ),
-                onChanged: (value) {
-                  setState(() {
-                    _roomName = value;
-                  });
-                },
               ),
               SizedBox(height: 16.0),
               Row(
@@ -134,15 +127,11 @@ class _meetingPageState extends State<meeting> {
                         labelText: 'DATE',
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(25.0),
-                          borderSide:
-                              BorderSide(color: Colors.black, width: 1.0),
                         ),
                       ),
                       child: TextButton(
                         onPressed: () => _selectDate(context),
-                        child: Text(
-                          "${_selectedDate.toLocal()}".split(' ')[0],
-                        ),
+                        child: Text("${_selectedDate.toLocal()}".split(' ')[0]),
                       ),
                     ),
                   ),
@@ -157,8 +146,6 @@ class _meetingPageState extends State<meeting> {
                         labelText: 'START',
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(25.0),
-                          borderSide:
-                              BorderSide(color: Colors.black, width: 1.0),
                         ),
                       ),
                       child: DropdownButton<String>(
@@ -170,8 +157,7 @@ class _meetingPageState extends State<meeting> {
                             endTimeSlots = _generateEndTimeSlots(newValue);
                           });
                         },
-                        items: timeSlots
-                            .map<DropdownMenuItem<String>>((String value) {
+                        items: timeSlots.map<DropdownMenuItem<String>>((String value) {
                           return DropdownMenuItem<String>(
                             value: value,
                             child: Text(value),
@@ -187,8 +173,6 @@ class _meetingPageState extends State<meeting> {
                         labelText: 'END',
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(25.0),
-                          borderSide:
-                              BorderSide(color: Colors.black, width: 1.0),
                         ),
                       ),
                       child: DropdownButton<String>(
@@ -198,8 +182,7 @@ class _meetingPageState extends State<meeting> {
                             _endTime = newValue!;
                           });
                         },
-                        items: endTimeSlots
-                            .map<DropdownMenuItem<String>>((String value) {
+                        items: endTimeSlots.map<DropdownMenuItem<String>>((String value) {
                           return DropdownMenuItem<String>(
                             value: value,
                             child: Text(value),
@@ -212,11 +195,7 @@ class _meetingPageState extends State<meeting> {
               ),
               SizedBox(height: 16.0),
               ElevatedButton(
-                onPressed: () {
-                  print(
-                      'จองห้อง $_roomName วันที่ ${_selectedDate.toLocal()} ตั้งแต่ $_startTime ถึง $_endTime');
-                  // Add booking logic here
-                },
+                onPressed: checkAndBookRoom,
                 child: Text('Confirm'),
               ),
             ],
@@ -224,5 +203,16 @@ class _meetingPageState extends State<meeting> {
         ),
       ),
     );
+  }
+
+  String _calculateEndTime(String startTime) {
+    int startHour = int.parse(startTime.substring(0, 2));
+    int startMinute = int.parse(startTime.substring(3, 5));
+    int endHour = startHour + 4;
+    if (endHour > 22) {
+      endHour = 22;
+    }
+    int endMinute = startMinute;
+    return '$endHour:${endMinute.toString().padLeft(2, '0')}';
   }
 }

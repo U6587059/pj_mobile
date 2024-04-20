@@ -176,7 +176,7 @@ class _MyHomePageState extends State<select_MyHomePage> {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) =>  meeting()),
+                  MaterialPageRoute(builder: (context) =>  Meeting()),
                 );
               },
               child: Stack(
