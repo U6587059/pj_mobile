@@ -5,12 +5,12 @@ member name
 2. 6587059 Punyaphat Waleesuksan
 ## Getting Started
 วิธี ใช้งาน
-1.โหลดไฟล์จาก github 
-2.เเตกไฟล์ที่โหลดมา
-3.ทำการเปิดไฟล์ใน visual Studio code
-4.run "flutter pub get" ใน terminal
+1. โหลดไฟล์จาก github 
+2. เเตกไฟล์ที่โหลดมา
+3. ทำการเปิดไฟล์ใน Visual Studio Code
+4. run "flutter pub get" ใน terminal
 5. เปิด emulator ในเครื่องของคุณ (android sdk)
-5.rum "flutter run " ใน terminal
+5. run "flutter run " ใน terminal
 6. เริ่มใช้งานได้เลย
 
 - [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
