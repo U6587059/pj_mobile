@@ -3,6 +3,7 @@ import 'kitchenpage.dart'; // Import the new pages
 import 'cinema.dart';
 import 'game.dart';
 import 'meetingpage.dart';
+import 'maps.dart'; // Import the maps.dart file
 
 void main() {
   runApp(const MyApp());
@@ -71,8 +72,7 @@ class _MyHomePageState extends State<select_MyHomePage> {
                       decoration: const BoxDecoration(
                         image: DecorationImage(
                           image: AssetImage('images/kitchen.jpg'),
-                          fit: BoxFit
-                              .cover, // ปรับให้รูปภาพตรงขอบและย่อลงเล็กน้อย
+                          fit: BoxFit.cover,
                         ),
                       ),
                     ),
@@ -207,6 +207,17 @@ class _MyHomePageState extends State<select_MyHomePage> {
             ),
           ],
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => MapSample()),
+          );
+        },
+        tooltip: 'Open Maps',
+        child: Icon(Icons.map),
+        backgroundColor: Colors.green, // เพิ่มสีพื้นหลังสำหรับปุ่ม
       ),
     );
   }
