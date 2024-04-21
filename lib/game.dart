@@ -63,7 +63,7 @@ class _GameRoomState extends State<GameRoom> {
       context: context,
       initialDate: _selectedDate,
       firstDate: DateTime.now(),
-      lastDate: DateTime.now().add(Duration(days: 2)), // Extended to allow booking up to one year in advance
+      lastDate: DateTime.now().add(Duration(days: 2)), 
     );
     if (picked != null && picked != _selectedDate) {
       setState(() {
@@ -134,7 +134,7 @@ class _GameRoomState extends State<GameRoom> {
           padding: const EdgeInsets.all(16.0),
           child: Column(
             children: [
-              Image.asset('images/game.jpg'), // Image changed to represent a game room
+              Image.asset('images/game.jpg'), 
               SizedBox(height: 16.0),
               TextField(
                 controller: _roomController,

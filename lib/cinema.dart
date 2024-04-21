@@ -66,7 +66,7 @@ class _CinemaRoomState extends State<CinemaRoom> {
       context: context,
       initialDate: _selectedDate,
       firstDate: DateTime.now(),
-      lastDate: DateTime.now().add(Duration(days: 2)), // Extended to allow booking up to one year in advance
+      lastDate: DateTime.now().add(Duration(days: 2)), //กำหนดวันที่จองได้ล่วงหน้า
     );
     if (picked != null && picked != _selectedDate) {
       setState(() {
@@ -158,7 +158,7 @@ class _CinemaRoomState extends State<CinemaRoom> {
           child: Column(
             children: [
               Image.asset(
-                  'images/movie.jpg'), // Image changed to represent a cinema room
+                  'images/movie.jpg'), 
               SizedBox(height: 16.0),
               TextField(
                 controller: _roomController,

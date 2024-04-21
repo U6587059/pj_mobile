@@ -10,8 +10,8 @@ import 'package:pj_mobile/success.dart';
 import 'package:pj_mobile/select_room.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized(); // ผูก Flutter กับ engine
-  await Firebase.initializeApp(); // เริ่มต้น Firebase
+  WidgetsFlutterBinding.ensureInitialized(); 
+  await Firebase.initializeApp(); 
   runApp(const MyApp());
 }
 
@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       routes: <String, WidgetBuilder>{
-        "/": (BuildContext context) => LoginScreen(), // สมมุติว่า LoginScreen คือหน้าล็อกอินของคุณ
+        "/": (BuildContext context) => LoginScreen(), 
       },
       initialRoute: "/",
     );

@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'select_room.dart'; // Ensure this path is correct and 'select_room.dart' exists
+import 'select_room.dart'; 
 
 class MyHomePage extends StatefulWidget {
   @override
@@ -12,7 +12,7 @@ class _MyHomePageState extends State<MyHomePage> {
   final _formKey = GlobalKey<FormState>();
   final _passwordController = TextEditingController();
   final _emailController = TextEditingController();
-  final FirebaseAuth _auth = FirebaseAuth.instance; // Firebase Auth instance
+  final FirebaseAuth _auth = FirebaseAuth.instance; 
 
   @override
   void dispose() {
@@ -26,17 +26,17 @@ class _MyHomePageState extends State<MyHomePage> {
       try {
         // Attempt to sign in the user with Firebase Auth
         UserCredential userCredential = await _auth.signInWithEmailAndPassword(
-          email: _emailController.text, // Removed trim() to preserve case sensitivity
+          email: _emailController.text, 
           password: _passwordController.text.trim(),
         );
-        // Navigate to another page if login is successful
+        
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => select_MyHomePage()), // Make sure the class name matches
+          MaterialPageRoute(builder: (context) => select_MyHomePage()), 
         );
       } on FirebaseAuthException catch (e) {
-        // Handle errors
-        String errorMessage = 'Email or Password is wrong'; // Generic error message
+       
+        String errorMessage = 'Email or Password is wrong'; 
         if (e.code == 'user-not-found' || e.code == 'wrong-password') {
           errorMessage = 'Email or Password is wrong';
         }

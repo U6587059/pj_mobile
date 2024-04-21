@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'kitchenpage.dart'; // Import the new pages
+import 'kitchenpage.dart'; 
 import 'cinema.dart';
 import 'game.dart';
 import 'meetingpage.dart';
-import 'maps.dart'; // Import the maps.dart file
+import 'maps.dart'; 
 
 void main() {
   runApp(const MyApp());
@@ -217,7 +217,7 @@ class _MyHomePageState extends State<select_MyHomePage> {
         },
         tooltip: 'Open Maps',
         child: Icon(Icons.map),
-        backgroundColor: Colors.green, // เพิ่มสีพื้นหลังสำหรับปุ่ม
+        backgroundColor: Colors.green, 
       ),
     );
   }

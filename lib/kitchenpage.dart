@@ -134,7 +134,7 @@ class _KitchenRoomState extends State<KitchenRoom> {
           padding: const EdgeInsets.all(16.0),
           child: Column(
             children: [
-              Image.asset('images/kitchen.jpg'), // Changed image to represent a kitchen
+              Image.asset('images/kitchen.jpg'), 
               SizedBox(height: 16.0),
               TextField(
                 controller: _roomController,

@@ -27,13 +27,13 @@ class _LoginScreenState extends State<LoginScreen> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  SizedBox(height: 100),  // Add spacing above the logo
+                  SizedBox(height: 100),  
                   Center(
                     child: SingleChildScrollView(
                       child: Column(
                         children: [
                           Image.asset('images/keke_logo.png', width: 200, height: 200),
-                          const SizedBox(height: 40),  // Add spacing below the logo
+                          const SizedBox(height: 40),  
                           Text(
                             'HELLO',
                             style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold, color: Colors.black),

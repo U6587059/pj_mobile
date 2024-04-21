@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'select_room.dart'; // Ensure this import matches the location of your SelectRoom screen file
-import 'loginpage.dart'; // Ensure this import matches the location of your Login screen file
+import 'select_room.dart'; 
+import 'loginpage.dart'; 
 
 void main() {
   runApp(MyApp());
@@ -51,7 +51,7 @@ class _ConfirmationScreenState extends State<ConfirmationScreen> {
                 context,
                 MaterialPageRoute(
                     builder: (context) =>
-                        MyHomePage()), // Replace 'Login' with your actual login screen widget
+                        MyHomePage()), 
               );
             },
             icon: Icon(Icons.logout),
@@ -121,7 +121,7 @@ class _ConfirmationScreenState extends State<ConfirmationScreen> {
                 context,
                 MaterialPageRoute(
                     builder: (context) =>
-                        select_MyHomePage()), // Replace 'SelectRoom' with your actual select room screen widget
+                        select_MyHomePage()), 
               );
             },
             child: Row(
