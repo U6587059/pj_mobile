@@ -1,12 +1,17 @@
 # pj_mobile
-Hello guys
-A new Flutter project.
-
+KEKE_project_itds 283
+member name 
+1. 6587019 natawat tephassadin na ayutaya
+2. 6587059 Punyaphat Waleesuksan
 ## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
+วิธี ใช้งาน
+1.โหลดไฟล์จาก github 
+2.เเตกไฟล์ที่โหลดมา
+3.ทำการเปิดไฟล์ใน visual Studio code
+4.run "flutter pub get" ใน terminal
+5. เปิด emulator ในเครื่องของคุณ (android sdk)
+5.rum "flutter run " ใน terminal
+6. เริ่มใช้งานได้เลย
 
 - [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
 - [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
