@@ -66,8 +66,7 @@ class _CinemaRoomState extends State<CinemaRoom> {
       context: context,
       initialDate: _selectedDate,
       firstDate: DateTime.now(),
-      lastDate: DateTime.now().add(Duration(
-          days: 365)), // Extended to allow booking up to one year in advance
+      lastDate: DateTime.now().add(Duration(days: 2)), // Extended to allow booking up to one year in advance
     );
     if (picked != null && picked != _selectedDate) {
       setState(() {
