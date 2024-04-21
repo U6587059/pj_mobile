@@ -5,7 +5,6 @@ import 'error.dart';
 import 'package:pj_mobile/Firstpage.dart';
 import 'package:pj_mobile/game.dart';
 import 'package:pj_mobile/kitchenpage.dart';
-import 'package:pj_mobile/main_page.dart';
 import 'package:pj_mobile/meetingpage.dart';
 import 'package:pj_mobile/success.dart';
 import 'package:pj_mobile/select_room.dart';
