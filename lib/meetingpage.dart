@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'error.dart';
+import 'success.dart';
 
 void main() {
   runApp(MyApp());
@@ -72,18 +74,45 @@ class _MeetingPageState extends State<Meeting> {
   void checkAndBookRoom() async {
     final FirebaseFirestore firestore = FirebaseFirestore.instance;
 
-    QuerySnapshot query = await firestore.collection('bookings').where('room', isEqualTo: _roomName).where('date', isEqualTo: _selectedDate.toLocal().toString().split(' ')[0]).where('startTime', isEqualTo: _startTime).where('endTime', isEqualTo: _endTime).get();
+    DocumentSnapshot metadata = await firestore.collection('metadata').doc('bookingID').get();
+    int currentBookingId = metadata.exists ? metadata['lastId'] : 4999;  // Start from 4999 if no prior data
 
-    if (query.docs.isNotEmpty) {
-      Navigator.pushNamed(context, '/error');
+    // Convert times to DateTime for comparison
+    DateTime selectedDay = DateTime(_selectedDate.year, _selectedDate.month, _selectedDate.day);
+    DateTime startTime = DateTime(selectedDay.year, selectedDay.month, selectedDay.day, int.parse(_startTime.split(':')[0]), int.parse(_startTime.split(':')[1]));
+    DateTime endTime = DateTime(selectedDay.year, selectedDay.month, selectedDay.day, int.parse(_endTime.split(':')[0]), int.parse(_endTime.split(':')[1]));
+
+    QuerySnapshot query = await firestore.collection('bookings')
+      .where('room', isEqualTo: _roomName)
+      .where('date', isEqualTo: selectedDay.toLocal().toString().split(' ')[0])
+      .get();
+
+    bool isOverlap = query.docs.any((doc) {
+      DateTime existingStartTime = DateTime.parse(doc['date'] + ' ' + doc['startTime']);
+      DateTime existingEndTime = DateTime.parse(doc['date'] + ' ' + doc['endTime']);
+      return (startTime.isBefore(existingEndTime) && endTime.isAfter(existingStartTime));
+    });
+
+    if (isOverlap) {
+      Navigator.push(context, MaterialPageRoute(builder: (context) => BookingErrorScreen()));
     } else {
+      int newBookingId = currentBookingId + 1;
+
       await firestore.collection('bookings').add({
         'room': _roomName,
-        'date': _selectedDate.toLocal().toString().split(' ')[0],
+        'date': selectedDay.toLocal().toString().split(' ')[0],
         'startTime': _startTime,
         'endTime': _endTime,
+        'bookingId': newBookingId,
+        'timestamp': FieldValue.serverTimestamp(),
       });
-      Navigator.pushNamed(context, '/success');
+
+      // Update last booking ID
+      await firestore.collection('metadata').doc('bookingID').set({
+        'lastId': newBookingId
+      });
+
+      Navigator.push(context, MaterialPageRoute(builder: (context) => ConfirmationScreen()));
     }
   }
 

@@ -38,20 +38,16 @@ class _MyHomePageState extends State<select_MyHomePage> {
         backgroundColor: Colors.black,
         centerTitle: true,
         title: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0),
-          child: Center(
-          child: const Center(
-            child: Text(
-              'ROOMS',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-              ),
+          padding: EdgeInsets.symmetric(horizontal: 16.0),
+          child: Text(
+            'ROOMS',
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
             ),
           ),
         ),
-      ),
       ),
       body: Center(
         child: Column(
@@ -61,7 +57,7 @@ class _MyHomePageState extends State<select_MyHomePage> {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => kitchen()),
+                  MaterialPageRoute(builder: (context) => KitchenRoom()),
                 );
               },
               child: Stack(
@@ -100,7 +96,7 @@ class _MyHomePageState extends State<select_MyHomePage> {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => movie()),
+                  MaterialPageRoute(builder: (context) => CinemaRoom()),
                 );
               },
               child: Stack(
@@ -138,7 +134,7 @@ class _MyHomePageState extends State<select_MyHomePage> {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => game()),
+                  MaterialPageRoute(builder: (context) => GameRoom()),
                 );
               },
               child: Stack(
@@ -176,7 +172,7 @@ class _MyHomePageState extends State<select_MyHomePage> {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) =>  Meeting()),
+                  MaterialPageRoute(builder: (context) => Meeting()),
                 );
               },
               child: Stack(
